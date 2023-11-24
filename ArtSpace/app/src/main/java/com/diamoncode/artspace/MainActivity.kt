@@ -11,11 +11,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -30,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -38,6 +38,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.diamoncode.artspace.model.ResourcesData
 import com.diamoncode.artspace.ui.theme.ArtSpaceTheme
 
 class MainActivity : ComponentActivity() {
@@ -58,10 +59,12 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun renderArtSpace() {
+fun renderArtSpace(context: Context = LocalContext.current) {
 
     var idImage by remember { mutableStateOf(1) }
-    var idText by remember { mutableStateOf("mainText_1") }
+    var objectResource by remember {
+        mutableStateOf<ResourcesData>(ResourcesData(idImage, context))
+    }
 
     Column(
         modifier = Modifier
@@ -71,8 +74,9 @@ fun renderArtSpace() {
             .verticalScroll(rememberScrollState())
         //.wrapContentSize(Alignment.Center)
         //.border(width = 1.dp, color = Color.Black),
-        , horizontalAlignment = Alignment.CenterHorizontally
-        , verticalArrangement = Arrangement.SpaceBetween
+        ,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween
 
 
     ) {
@@ -95,18 +99,22 @@ fun renderArtSpace() {
             Surface(
                 modifier = Modifier, shadowElevation = 8.dp,
             ) {
-                RenderImageSection(idImage)
+                RenderImageSection(objectResource)
             }
         }
 
         Row() {
-            Text(text = "$idImage", fontSize = 45.sp, fontWeight = FontWeight.ExtraBold)
+            Text(
+                text = "-" + objectResource.id + "-",
+                fontSize = 45.sp,
+                fontWeight = FontWeight.ExtraBold
+            )
         }
 
         Row(
             modifier = Modifier.background(color = Color.LightGray)
         ) {
-            RenderTextSection(idImage)
+            RenderTextSection(objectResource)
         }
 
 
@@ -128,54 +136,50 @@ fun renderArtSpace() {
                     idImage++
                 }
             }, R.string.btn_next, isEnable = idImage < 4)
+
+            objectResource = ResourcesData(idImage, context)
         }
     }
 }
 
 @Composable
-fun RenderImageSection(idImage: Int) {
+fun RenderImageSection(objectResource: ResourcesData) {
 
     Column(
         modifier = Modifier
             //.border(width = 2.dp, color= Color.Green)
             .padding(20.dp)
     ) {
-        Image(   painter = painterResource(id = getImageResource(textId = "img$idImage")), contentDescription = "text",
-            Modifier.size(400.dp)
+        Image(
+            painter = painterResource(id = objectResource.imageResourceId),
+            contentDescription = "text",
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(240.dp),
+            contentScale = ContentScale.Crop
+
         )
     }
 }
 
 @Composable
-fun getStringResource(textId: String): Int {
-    val context = LocalContext.current
-    return context.resources.getIdentifier(textId, "string", context.packageName)
-}
-
-@Composable
-fun getImageResource(textId: String): Int {
-    val context = LocalContext.current
-    return context.resources.getIdentifier(textId, "drawable", context.packageName)
-}
-
-@Composable
-fun RenderTextSection(idImage: Int) {
+fun RenderTextSection(objectResource: ResourcesData) {
     Column(
         modifier = Modifier
             //.border(width = 1.dp, color = Color.Green)
             .padding(20.dp)
             .fillMaxWidth()
     ) {
-        Text(text = stringResource(id = getStringResource("mainText_$idImage")), fontSize = 25.sp)
+        Text(text = stringResource(id = objectResource.mainTextId), fontSize = 25.sp)
 
         Text(
-            text = stringResource(id = getStringResource(textId = "subText_$idImage")),
+            text = stringResource(id = objectResource.subTextId),
             fontWeight = FontWeight.Bold,
             fontSize = 20.sp
         )
 
         Text(
-            text = "(" + stringResource(id = getStringResource(textId = "year_$idImage")) + ")",
+            text = "(" + stringResource(id = objectResource.yearTextId) + ")",
             fontStyle = FontStyle.Italic,
             fontSize = 15.sp
         )
