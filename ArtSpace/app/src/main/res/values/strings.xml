@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Art Space</string>
+    <string name="btn_previous">Previous</string>
+    <string name="btn_next">Next</string>
+    <string name="mainText_1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus et.</string>
+    <string name="mainText_2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. A erat nam at lectus urna duis.</string>
+    <string name="mainText_3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sit amet facilisis magna etiam tempor orci eu lobortis elementum.</string>
+    <string name="mainText_4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ornare suspendisse sed nisi lacus sed viverra tellus in hac.</string>
+    <string name="subText_1">condimentum lacinia quis vel</string>
+    <string name="subText_2">sit amet mauris commodo</string>
+    <string name="subText_3">proin gravida hendrerit lectus</string>
+    <string name="subText_4">in tellus integer feugiat</string>
+    <string name="year_1">2010</string>
+    <string name="year_2">2005</string>
+    <string name="year_3">2011</string>
+    <string name="year_4">2023</string>
+</resources>
