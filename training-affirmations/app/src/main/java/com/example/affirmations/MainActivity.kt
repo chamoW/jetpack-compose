@@ -87,8 +87,8 @@ fun AffirmationCard(affirmation: Affirmation, modifier: Modifier = Modifier) {
                 painter = painterResource(affirmation.imageResourceId),
                 contentDescription = stringResource(affirmation.stringResourceId),
                 modifier = Modifier
-                    //.fillMaxWidth()
-                    //.height(194.dp)
+                    .fillMaxWidth()
+                    .height(194.dp)
                          ,
                 contentScale = ContentScale.Crop
             )
