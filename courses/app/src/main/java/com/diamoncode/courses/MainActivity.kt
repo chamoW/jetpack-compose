@@ -119,7 +119,7 @@ fun CourseItem(topic: Topic, modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    CoursesTheme {
+    CoursesTheme (darkTheme = false) {
 
         //CourseItem(topic = DataSource.topics[1])
         CourseApp()
